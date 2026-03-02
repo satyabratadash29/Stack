@@ -1,0 +1,59 @@
+FInd prev and next great element using stack.
+
+fun findNextGreatElement(arr: Array<Int>): Array<Int>{
+
+    val stack = ArrayDeque<Int>()
+    val resArr = mutableListOf<Int>()
+    for(i in arr.lastIndex downTo 0)
+    {
+        if(stack.isEmpty()){
+            resArr.add(-1)
+            stack.add(arr[i])
+            //stack.add(arr[i])
+        }
+        else if(stack.last() > arr[i]){
+            resArr.add(stack.last())
+            stack.add(arr[i])
+        }else if(stack.isNotEmpty() && stack.last() < arr[i]){
+            while(stack.isNotEmpty() && arr[i] > stack.last()){
+                stack.removeLast()
+            }
+            if(stack.isEmpty()){
+                stack.add(-1)
+            }else{
+                resArr.add(stack.last())
+            }
+            stack.add(arr[i])
+        }
+
+    }
+    return resArr.toTypedArray()
+}
+
+fun findPreviousGreatestElement(arr: Array<Int>): Array<Int>{
+
+    val stack = ArrayDeque<Int>()
+    val res = mutableListOf<Int>()
+    for(i in 0..arr.lastIndex){
+
+        if(stack.isEmpty()){
+            res.add(-1)
+            stack.addLast(arr[i])
+        }else if(stack.last() > arr[i]){
+            res.add(stack.last())
+            stack.add(arr[i])
+        }else if(stack.isNotEmpty() && stack.last() < arr[i]){
+            while(stack.isNotEmpty() && stack.last() < arr[i]){
+                stack.removeLast()
+            }
+            if(stack.isEmpty()){
+                res.add(-1)
+            }else{
+                res.add(arr[i])
+            }
+            stack.addLast(arr[i])
+        }
+    }
+
+    return res.toTypedArray()
+}
