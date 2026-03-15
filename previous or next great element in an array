@@ -1,33 +1,17 @@
 FInd prev and next great element using stack.
 
-fun findNextGreatElement(arr: Array<Int>): Array<Int>{
-
+fun findNextGreaterElement(arr: IntArray): IntArray {
+    val n = arr.size
+    val result = IntArray(n)
     val stack = ArrayDeque<Int>()
-    val resArr = mutableListOf<Int>()
-    for(i in arr.lastIndex downTo 0)
-    {
-        if(stack.isEmpty()){
-            resArr.add(-1)
-            stack.add(arr[i])
-            //stack.add(arr[i])
+    for (i in n - 1 downTo 0) {
+        while (stack.isNotEmpty() && stack.last() <= arr[i]) {
+            stack.removeLast()
         }
-        else if(stack.last() > arr[i]){
-            resArr.add(stack.last())
-            stack.add(arr[i])
-        }else if(stack.isNotEmpty() && stack.last() < arr[i]){
-            while(stack.isNotEmpty() && arr[i] > stack.last()){
-                stack.removeLast()
-            }
-            if(stack.isEmpty()){
-                stack.add(-1)
-            }else{
-                resArr.add(stack.last())
-            }
-            stack.add(arr[i])
-        }
-
+        result[i] = if (stack.isEmpty()) -1 else stack.last()
+        stack.addLast(arr[i])
     }
-    return resArr.toTypedArray()
+    return result
 }
 
 fun findPreviousGreatestElement(arr: Array<Int>): Array<Int>{
