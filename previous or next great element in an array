@@ -36,3 +36,32 @@ fun findNextGreaterElementToLeft(arr: IntArray): IntArray{ // find previous grea
 
     return res
 }
+
+fun findNextSmallestElement(arr: IntArray):IntArray{
+    val n = arr.size
+    val res = IntArray(n)
+    val stack = ArrayDeque<Int>()
+    for(i in n-1 downTo 0){
+        while(stack.size > 0 && stack.last() >= arr[i]){
+            stack.removeLast()
+        }
+        res[i] = if(stack.size == 0) -1 else stack.last()
+        stack.addLast(arr[i])
+    }
+    return res
+
+}
+
+fun findPreviousSmallestElement(arr: IntArray): IntArray{
+    val n =arr.size
+    val stack = ArrayDeque<Int>()
+    val res = IntArray(n)
+    for(i in 0..n-1){
+        while(stack.size > 0 && stack.last()>=arr[i]){
+            stack.removeLast()
+        }
+        res[i] = if(stack.size == 0) -1 else stack.last()
+        stack.addLast(arr[i])
+    }
+    return res
+}
